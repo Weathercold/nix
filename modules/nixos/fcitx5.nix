@@ -7,7 +7,12 @@
 let
   inherit (config.catppuccin) sources;
   cfg = config.i18n.inputMethod.fcitx5.catppuccin;
-  enable = cfg.enable && config.i18n.inputMethod.enabled == "fcitx5";
+  enable =
+    cfg.enable
+    && (
+      config.i18n.inputMethod.enabled == "fcitx5" # Deprecated but still available
+      || (config.i18n.inputMethod.enable && config.i18n.inputMethod.type == "fcitx5")
+    );
 
   theme = pkgs.runCommand "catppuccin-fcitx5" { } ''
     mkdir -p $out/share/fcitx5/themes/
